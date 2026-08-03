@@ -1,0 +1,13 @@
+[
+  {
+    "id": "a039c2e1-931d-460b-bb89-94bc428e1a85",
+    "title": "Cocinar",
+    "description": null,
+    "status": "pending",
+    "difficulty": "easy",
+    "createdAt": "2026-08-03T20:25:04.299Z",
+    "updatedAt": "2026-08-03T20:25:04.299Z",
+    "expirationDate": "2026-08-04T02:59:59.000Z",
+    "deleted": false
+  }
+]

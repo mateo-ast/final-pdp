@@ -1,32 +1,58 @@
-import { isCancel, cancel, text } from '@clack/prompts';
+import { log } from "@clack/prompts";
+import { loadTasksDATA } from "./data.js";
+import { menu, type OptionMenu } from "./ui/menu.js";
+import { seeTasks } from "./core/seeTasks.js";
+import { addTask } from "./core/addTask.js";
+import { searchTask } from "./core/searchTask.js";
+import { saveTasks } from "./core/saveTasks.js";
+import { exit } from "./core/exit.js";
+import type { TaskList } from "./core/task.js";
+import { next } from "./ui/next.js";
 
-async function promptLoop(): Promise<void> {
+async function app(): Promise<void> {
+  let tasks: TaskList = [];
+  let unsavedTasks: boolean = false;
+  try {
+    tasks = loadTasksDATA();
+  } catch (error) {
+    log.error("No se pudieron cargar las tareas del archivo: tasks.json");
+  }
+
   while (true) {
-    const value = await text({
-      message: 'What is the meaning of life?',
-      validate: (value) => {
-        if (!value) return "error";
-        if (value === "hola") return "no se puede bro"
-        return undefined
-      }
-    });
-
-    if (isCancel(value)) {
-      console.clear()
-      cancel('No canceles bro');
-      // process.exit(1);
+    console.clear();
+    const option: OptionMenu = await menu(
+      tasks.some((task) => !task.deleted),
+      unsavedTasks,
+    );
+    switch (option) {
+      case "seeTasks":
+        await seeTasks(tasks);
+        break;
+      case "searchTask":
+        const { tasks: newTasks, unsavedTasks: ut } = await searchTask(tasks);
+        tasks = newTasks;
+        unsavedTasks = ut;
+        break;
+      case "addTask":
+        tasks = await addTask(tasks);
+        unsavedTasks = true;
+        break;
+      case "stats":
+        break;
+      case "saveTasks":
+        unsavedTasks = await saveTasks(tasks);
+        break;
+      case "exit":
+        await exit(unsavedTasks);
+        break;
+      default:
+        break;
     }
-
-    if (value === 'salir') {
-      break;
-    }
-
-    // A partir de aquí, TypeScript sabe que `value` es estrictamente `string`
-    console.log(`Procesando: ${value.toString()}`);
+    await next();
   }
 }
 
-promptLoop().catch((err: unknown) => {
-  console.error('Error no controlado:', err);
+app().catch((err) => {
+  log.error(String(err));
   process.exit(1);
 });
