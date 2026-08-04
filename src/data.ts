@@ -47,12 +47,13 @@ export function saveTasksDATA(
   }
 }
 
-export function loadTasksDATA(filePath: string = DEFAULT_FILE_PATH): TaskList {
+export function loadTasksDATA(
+  filePath: string = DEFAULT_FILE_PATH,
+): TaskList | [] {
   try {
     const data = readFileSync(filePath, "utf-8");
     return parseTasks(data);
-  } catch (error: unknown) {
-    const msg = error instanceof Error ? error.message : String(error);
-    throw new Error(`Error al leer archivo: ${msg}`);
+  } catch {
+    return [];
   }
 }

@@ -1,4 +1,4 @@
-import { confirm, isCancel, outro } from "@clack/prompts";
+import { cancel, confirm, isCancel, outro } from "@clack/prompts";
 
 export async function confirmSave(): Promise<boolean> {
   const save: boolean | symbol = await confirm({
@@ -9,7 +9,10 @@ export async function confirmSave(): Promise<boolean> {
     initialValue: true,
   });
 
-  if (isCancel(save)) return false;
+  if (isCancel(save)) {
+    cancel("No se guardaron las tareas");
+    return false;
+  }
 
   outro(save ? "Se guardaron las tareas" : "No se guardaron las tareas");
   return save;

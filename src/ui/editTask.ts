@@ -4,7 +4,6 @@ import {
   date,
   group,
   isCancel,
-  outro,
   select,
   text,
 } from "@clack/prompts";
@@ -15,7 +14,6 @@ import {
   type Status,
   type Task,
 } from "../core/task.js";
-import { printTask } from "./printTasks.js";
 
 const CancelError = new Error("UserCancelled");
 
@@ -58,6 +56,7 @@ export async function editTaskUI(
               { value: "pending", label: "Pendiente" },
               { value: "to do", label: "En curso" },
               { value: "done", label: "Terminada" },
+              { value: "cancelled", label: "Cancelada " },
             ],
           }),
         difficulty: () =>

@@ -1,6 +1,5 @@
 import type { UUID } from "crypto";
 
-// export type Status = "to do" | "pending" | "done" | "cancelled" | "expired";
 export type Status = "to do" | "pending" | "done" | "cancelled";
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -18,7 +17,7 @@ export interface Task {
 
 export type TaskList = readonly Task[];
 
-// PURE
+// PURA
 export function newTask(
   id: UUID,
   title: string,
@@ -45,7 +44,7 @@ export function newTask(
   };
 }
 
-// PURE
+// PURA
 export function updateTask(
   task: Task,
   title: string,
@@ -70,7 +69,7 @@ export function updateTask(
   };
 }
 
-// PURE
+// PURA
 export function statusToString(status: Status): string {
   const STATUS_MAP: Record<Status, string> = {
     "to do": "En curso",
@@ -82,27 +81,27 @@ export function statusToString(status: Status): string {
   return STATUS_MAP[status];
 }
 
-// PURE
+// PURA
 function difficultyToString(difficulty: Difficulty): string {
   const DIFFICULTY_MAP: Record<Difficulty, string> = {
-    easy: "Fácil",
-    medium: "Medio",
-    hard: "Difícil",
+    easy: "★☆☆",
+    medium: "★★☆",
+    hard: "★★★",
   } as const;
 
   return DIFFICULTY_MAP[difficulty];
 }
 
-// PURE
+// PURA
 function dateToString(date: Date): string {
   return date.toLocaleString("es-AR", {
     dateStyle: "long",
-    // timeStyle: "short",
     hour12: false,
+    timeZone: "America/Argentina/Buenos_Aires",
+    timeStyle: "short",
   });
 }
 
-// PURE
 export function taskToString(
   task: Task,
   now: Date,

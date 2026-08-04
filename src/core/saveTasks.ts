@@ -1,10 +1,13 @@
 import { saveTasksDATA } from "../data.js";
+import type { AppState } from "../index.js";
 import { confirmSave } from "../ui/confirmSave.js";
-import type { TaskList } from "./task.js";
 
-export async function saveTasks(tasks: TaskList): Promise<boolean> {
+export async function saveTasks(state: AppState): Promise<AppState> {
   const isConfirmed: boolean = await confirmSave();
-  if (!isConfirmed) return true;
-  saveTasksDATA(tasks);
-  return false;
+  if (!isConfirmed) return state;
+  saveTasksDATA(state.tasks);
+  return {
+    ...state,
+    hasUnsavedTasks: false,
+  };
 }

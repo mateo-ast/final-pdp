@@ -1,13 +1,12 @@
-import { selectTaskUI } from "../ui/selectTask.js";
 import { editTaskUI } from "../ui/editTask.js";
 import { printTask } from "../ui/printTasks.js";
-import type { Task, TaskList } from "./task.js";
+import { searchTaskUI } from "../ui/searchTask.js";
+import type { Task } from "./task.js";
+import type { AppState } from "../index.js";
 
-export async function searchTask(
-  tasks: TaskList,
-): Promise<{ tasks: TaskList; unsavedTasks: boolean }> {
-  const selectedTask: Task | null = await selectTaskUI(tasks);
-  if (!selectedTask) return { tasks, unsavedTasks: false };
+export async function searchTask(state: AppState): Promise<AppState> {
+  const selectedTask: Task | null = await searchTaskUI(state.tasks);
+  if (!selectedTask) return state;
 
   const editedTask: Task | null = await editTaskUI(
     selectedTask,
@@ -22,7 +21,7 @@ export async function searchTask(
     //     titles.push(task.title)
     //   return titles;
     // }, [])
-    tasks.flatMap((task: Task) =>
+    state.tasks.flatMap((task: Task) =>
       task.title.toLowerCase() !== selectedTask.title.toLowerCase()
         ? [task.title]
         : [],
@@ -31,10 +30,13 @@ export async function searchTask(
 
   printTask(!editedTask ? selectedTask : editedTask);
 
-  if (!editedTask) return { tasks, unsavedTasks: false };
+  if (!editedTask) return state;
 
   return {
-    tasks: tasks.map((task) => (task.id !== editedTask.id ? task : editedTask)),
-    unsavedTasks: true,
+    tasks: state.tasks.map((task) =>
+      task.id !== editedTask.id ? task : editedTask,
+    ),
+    hasActiveTasks: state.tasks.some((task) => !task.deleted),
+    hasUnsavedTasks: true,
   };
 }

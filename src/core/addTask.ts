@@ -1,10 +1,17 @@
+import type { AppState } from "../index.js";
 import { addTaskUI } from "../ui/addTask.js";
-import type { Task, TaskList } from "./task.js";
+import type { Task } from "./task.js";
 
-export async function addTask(tasks: TaskList): Promise<TaskList> {
-  const newTask: Task | null = await addTaskUI(tasks.map((t) => t.title));
+export async function addTask(state: AppState): Promise<AppState> {
+  const newTask: Task | null = await addTaskUI(
+    state.tasks.map((task) => task.title),
+  );
 
-  if (!newTask) return tasks;
+  if (!newTask) return state;
 
-  return [...tasks, newTask];
+  return {
+    ...state,
+    tasks: [...state.tasks, newTask],
+    hasUnsavedTasks: true,
+  };
 }

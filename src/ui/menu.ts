@@ -3,7 +3,7 @@ import { intro, isCancel, select, type Option } from "@clack/prompts";
 export type OptionMenu =
   "seeTasks" | "searchTask" | "addTask" | "stats" | "saveTasks" | "exit";
 
-export async function menu(
+export async function menuUI(
   existTasks = false,
   existUnsavedTasks = false,
 ): Promise<OptionMenu> {

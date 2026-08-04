@@ -1,9 +1,74 @@
 import { printTasks } from "../ui/printTasks.js";
-// import { next } from "../ui/next.js";
-import { type TaskList } from "./task.js";
+import { seeTasksMenuUI } from "../ui/seeTasksMenu.js";
+import {
+  seeTasksSortMenuUI,
+  type SeeTaskSortOptionMenu,
+} from "../ui/seeTaskSortMenu.js";
+import type { AppState } from "../index.js";
+import type { TaskList } from "./task.js";
 
-export async function seeTasks(tasks: TaskList): Promise<TaskList> {
-  printTasks(tasks);
-  // await next();
-  return tasks;
+// PURA
+function sortTaskByTitle(tasks: TaskList): TaskList {
+  return tasks.toSorted((firstTask, secondTask) =>
+    firstTask.title.localeCompare(secondTask.title, "es-AR"),
+  );
+}
+
+// PURA
+function sortTaskByCreationDate(tasks: TaskList): TaskList {
+  return tasks.toSorted(
+    (firstTask, secondTask) =>
+      firstTask.createdAt.getTime() - secondTask.createdAt.getTime(),
+  );
+}
+
+// PURA
+function sortTaskByExpirationDate(tasks: TaskList): TaskList {
+  return tasks.toSorted(
+    (firstTask, secondTask) =>
+      secondTask.expirationDate.getDate() - firstTask.expirationDate.getDate(),
+  );
+}
+
+// PURA
+function sortTasks(
+  tasks: TaskList,
+  sortOption: SeeTaskSortOptionMenu,
+): TaskList {
+  switch (sortOption) {
+    case "title":
+      return sortTaskByTitle(tasks);
+    case "createdDate":
+      return sortTaskByCreationDate(tasks);
+    case "expirationDate":
+      return sortTaskByExpirationDate(tasks);
+    default:
+      return tasks;
+  }
+}
+
+export async function seeTasks({
+  tasks,
+  hasActiveTasks,
+}: AppState): Promise<void> {
+  if (!hasActiveTasks) return;
+
+  const seeTaskOptionMenu = await seeTasksMenuUI(
+    tasks.some((task) => task.status === "pending"),
+    tasks.some((task) => task.status === "to do"),
+    tasks.some((task) => task.status === "done"),
+    tasks.some((task) => task.status === "cancelled"),
+  );
+
+  if (seeTaskOptionMenu === "back") return;
+
+  const seeTaskSortOption = await seeTasksSortMenuUI();
+
+  const sortedTasks = sortTasks(tasks, seeTaskSortOption);
+
+  seeTaskOptionMenu === "all"
+    ? printTasks(sortedTasks)
+    : printTasks(
+        sortedTasks.filter((task) => task.status === seeTaskOptionMenu),
+      );
 }
