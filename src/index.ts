@@ -7,6 +7,8 @@ import { exit } from "./core/exit.js";
 import { next } from "./ui/next.js";
 import type { TaskList } from "./core/task.js";
 import { menuUI, type OptionMenu } from "./ui/menu.js";
+import { stats } from "./core/stats.js";
+import { removeTask } from "./removeTask.js";
 
 export type AppState = {
   readonly tasks: TaskList;
@@ -23,12 +25,16 @@ async function menu(state: AppState, action: OptionMenu): Promise<AppState> {
       return await searchTask(state);
     case "addTask":
       return await addTask(state);
+    case "removeTask":
+      return await removeTask(state);
     case "stats":
+      await stats(state);
       return state;
     case "saveTasks":
       return await saveTasks(state);
     case "exit":
-      return await exit(state);
+      await exit(state);
+      return state;
     default:
       return state;
   }
@@ -50,6 +56,7 @@ async function app(): Promise<void> {
     const option = await menuUI(state.hasActiveTasks, state.hasUnsavedTasks);
     state = await menu(state, option);
     await next();
+    console.clear();
   }
 }
 

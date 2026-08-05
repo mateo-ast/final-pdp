@@ -1,4 +1,4 @@
-import { log, outro } from "@clack/prompts";
+import { intro, log, outro } from "@clack/prompts";
 import { taskToString, type Task, type TaskList } from "../core/task.js";
 
 export function printTask(task: Task) {
@@ -13,7 +13,9 @@ export function printTask(task: Task) {
   );
 }
 
-export function printTasks(tasks: TaskList) {
+export function printTasks(tasks: TaskList, title: string | null = null) {
+  if (title)
+    intro(title)
   tasks.forEach((task) => log.info(taskToString(task, new Date())));
   outro("Total: " + tasks.length);
 }

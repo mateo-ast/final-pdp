@@ -1,4 +1,4 @@
-import { confirm, isCancel, outro } from "@clack/prompts";
+import { cancel, confirm, isCancel, outro } from "@clack/prompts";
 
 export async function exitUI(message: string): Promise<boolean> {
   const exit: boolean | symbol = await confirm({
@@ -9,7 +9,10 @@ export async function exitUI(message: string): Promise<boolean> {
     initialValue: false,
   });
 
-  if (isCancel(exit)) return false;
+  if (isCancel(exit)) {
+    cancel("Cancelado");
+    return false;
+  }
 
   outro(exit ? "Adios" : "Continuemos");
   return exit;

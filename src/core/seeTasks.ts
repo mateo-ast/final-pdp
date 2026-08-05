@@ -53,22 +53,24 @@ export async function seeTasks({
 }: AppState): Promise<void> {
   if (!hasActiveTasks) return;
 
+  const activeTasks: TaskList = tasks.filter((task) => !task.deleted);
+
   const seeTaskOptionMenu = await seeTasksMenuUI(
-    tasks.some((task) => task.status === "pending"),
-    tasks.some((task) => task.status === "to do"),
-    tasks.some((task) => task.status === "done"),
-    tasks.some((task) => task.status === "cancelled"),
+    activeTasks.some((task) => task.status === "pending"),
+    activeTasks.some((task) => task.status === "to do"),
+    activeTasks.some((task) => task.status === "done"),
+    activeTasks.some((task) => task.status === "cancelled"),
   );
 
   if (seeTaskOptionMenu === "back") return;
 
   const seeTaskSortOption = await seeTasksSortMenuUI();
 
-  const sortedTasks = sortTasks(tasks, seeTaskSortOption);
+  const sortedTasks = sortTasks(activeTasks, seeTaskSortOption);
 
   seeTaskOptionMenu === "all"
     ? printTasks(sortedTasks)
     : printTasks(
-        sortedTasks.filter((task) => task.status === seeTaskOptionMenu),
-      );
+      sortedTasks.filter((task) => task.status === seeTaskOptionMenu),
+    );
 }

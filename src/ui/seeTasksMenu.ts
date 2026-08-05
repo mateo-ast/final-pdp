@@ -22,7 +22,7 @@ export async function seeTasksMenuUI(
   });
 
   if (isCancel(value)) {
-    cancel("Canceldo");
+    cancel("Cancelado");
     return "back";
   }
 

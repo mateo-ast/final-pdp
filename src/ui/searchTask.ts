@@ -1,20 +1,36 @@
 import { autocomplete, cancel, isCancel, type Option } from "@clack/prompts";
-import type { Task } from "../core/task.js";
+import type { Task, TaskList } from "../core/task.js";
 
 export type TaskOption = Option<Task>;
 
-// PURE
-function taskToTaskOption(tasks: readonly Task[]): TaskOption[] {
+// PURA
+function taskToTaskOption(tasks: TaskList): TaskOption[] {
   return tasks.map((task) => {
-    const disabled: boolean =
-      task.expirationDate.getDate() < new Date().getDate();
     return {
       value: task,
       label: task.title,
       hint: task.description ?? "",
-      disabled,
     };
   });
+}
+
+function filter(search: string, option: Option<Task>): boolean {
+  if (!search) return true;
+
+  const term: string = search.toLocaleLowerCase("es-AR");
+  const matchTitle: boolean = option.value.title
+    .toLocaleLowerCase("es-AR")
+    .includes(term);
+  const matchDescription: boolean = option.value.description
+    ? option.value.description
+      .toLocaleLowerCase("es-AR")
+      .includes(term)
+    : false;
+  const matchExpirationDate: boolean = option.value.expirationDate
+    .toLocaleDateString("es-AR")
+    .includes(term);
+
+  return matchTitle || matchDescription || matchExpirationDate;
 }
 
 export async function searchTaskUI(
@@ -24,6 +40,8 @@ export async function searchTaskUI(
   const selected = await autocomplete<Task>({
     message: "Selecciona una tarea o escribe para buscar",
     options,
+    filter,
+    placeholder: "título, descriptción o fecha de expiración"
   });
 
   if (isCancel(selected)) {

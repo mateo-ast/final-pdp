@@ -10,13 +10,13 @@ export async function searchTask(state: AppState): Promise<AppState> {
 
   const editedTask: Task | null = await editTaskUI(
     selectedTask,
-    // tasks
-    //   .filter(
-    //     (task: Task) =>
-    //       selectedTask.title.toLowerCase() !== task.title.toLowerCase(),
-    //   )
-    //   .map((task) => task.title),
-    // tasks.reduce((titles: string[], task: Task) => {
+    // state.tasks
+    // .filter(
+    //   (task: Task) =>
+    //     selectedTask.title.toLowerCase() !== task.title.toLowerCase(),
+    // )
+    // .map((task) => task.title),
+    // state.tasks.reduce((titles: string[], task: Task) => {
     //   if (selectedTask.title.toLowerCase() !== task.title.toLowerCase())
     //     titles.push(task.title)
     //   return titles;

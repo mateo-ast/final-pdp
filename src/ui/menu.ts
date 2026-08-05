@@ -1,7 +1,7 @@
 import { intro, isCancel, select, type Option } from "@clack/prompts";
 
 export type OptionMenu =
-  "seeTasks" | "searchTask" | "addTask" | "stats" | "saveTasks" | "exit";
+  "seeTasks" | "searchTask" | "addTask" | "stats" | "saveTasks" | "exit" | "removeTask";
 
 export async function menuUI(
   existTasks = false,
@@ -13,6 +13,7 @@ export async function menuUI(
     { value: "seeTasks", label: "Ver mis tareas", disabled: !existTasks },
     { value: "searchTask", label: "Buscar una tarea", disabled: !existTasks },
     { value: "addTask", label: "Agregar una tarea" },
+    { value: "removeTask", label: "Eliminar una tarea" },
     { value: "stats", label: "Ver estadísticas", disabled: !existTasks },
     {
       value: "saveTasks",
