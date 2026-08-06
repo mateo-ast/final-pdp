@@ -8,7 +8,7 @@ import { next } from "./ui/next.js";
 import type { TaskList } from "./core/task.js";
 import { menuUI, type OptionMenu } from "./ui/menu.js";
 import { stats } from "./core/stats.js";
-import { removeTask } from "./removeTask.js";
+import { removeTask } from "./core/removeTask.js";
 
 export type AppState = {
   readonly tasks: TaskList;

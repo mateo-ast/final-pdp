@@ -1,27 +1,39 @@
 import { intro, isCancel, select, type Option } from "@clack/prompts";
 
 export type OptionMenu =
-  "seeTasks" | "searchTask" | "addTask" | "stats" | "saveTasks" | "exit" | "removeTask";
+  | "seeTasks"
+  | "searchTask"
+  | "addTask"
+  | "stats"
+  | "saveTasks"
+  | "exit"
+  | "removeTask";
 
 export async function menuUI(
-  existTasks = false,
-  existUnsavedTasks = false,
+  hasActiveTasks = false,
+  hasUnsavedTasks = false,
 ): Promise<OptionMenu> {
   intro("Menú");
 
   const options: Option<OptionMenu>[] = [
-    { value: "seeTasks", label: "Ver mis tareas", disabled: !existTasks },
-    { value: "searchTask", label: "Buscar una tarea", disabled: !existTasks },
+    { value: "seeTasks", label: "Ver mis tareas", disabled: !hasActiveTasks },
+    {
+      value: "searchTask",
+      label: "Buscar una tarea",
+      disabled: !hasActiveTasks,
+    },
     { value: "addTask", label: "Agregar una tarea" },
-    { value: "removeTask", label: "Eliminar una tarea" },
-    { value: "stats", label: "Ver estadísticas", disabled: !existTasks },
+    {
+      value: "removeTask",
+      label: "Eliminar una tarea",
+      disabled: !hasActiveTasks,
+    },
+    { value: "stats", label: "Ver estadísticas" },
     {
       value: "saveTasks",
       label: "Guardar tareas",
-      disabled: !existUnsavedTasks,
-      hint: existUnsavedTasks
-        ? 'en "tareas.json"'
-        : "no hay tareas sin guardar",
+      disabled: !hasUnsavedTasks,
+      hint: hasUnsavedTasks ? 'en "tareas.json"' : "no hay tareas sin guardar",
     },
     { value: "exit", label: "Salir" },
   ];

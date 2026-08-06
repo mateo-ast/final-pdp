@@ -129,3 +129,15 @@ export function taskToString(
     .map(([key, value]) => `${key.padEnd(PADDING)} ${value}`)
     .join("\n");
 }
+
+// PURA
+export const isActive = (task: Task): boolean => !task.deleted;
+
+// PURA
+export const isDeleted = (task: Task): boolean => task.deleted;
+
+// PURA
+export const hasStatus =
+  (status: Status) =>
+  (task: Task): boolean =>
+    task.status === status;

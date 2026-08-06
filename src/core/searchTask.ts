@@ -3,10 +3,22 @@ import { printTask } from "../ui/printTasks.js";
 import { searchTaskUI } from "../ui/searchTask.js";
 import type { Task } from "./task.js";
 import type { AppState } from "../index.js";
+import { confirmUI } from "../ui/confirm.js";
 
 export async function searchTask(state: AppState): Promise<AppState> {
   const selectedTask: Task | null = await searchTaskUI(state.tasks);
   if (!selectedTask) return state;
+
+  const confirmEdit: boolean = await confirmUI({
+    message: "¿Desea editar la tarea",
+    initialValue: false
+  })
+
+  if (!confirmEdit) {
+    printTask(selectedTask);
+    return state;
+  }
+
 
   const editedTask: Task | null = await editTaskUI(
     selectedTask,

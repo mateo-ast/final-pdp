@@ -1,9 +1,7 @@
 import {
   cancel,
-  confirm,
   date,
   group,
-  isCancel,
   select,
   text,
 } from "@clack/prompts";
@@ -21,16 +19,6 @@ export async function editTaskUI(
   task: Task,
   tasksTitles: string[],
 ): Promise<Task | null> {
-  const confirmEdit: boolean | symbol = await confirm({
-    message: "¿Desea editar la tarea?",
-    active: "Sí",
-    inactive: "No",
-    vertical: true,
-    initialValue: false,
-  });
-
-  if (isCancel(confirmEdit) || !confirmEdit) return null;
-
   try {
     const groupTask = await group(
       {

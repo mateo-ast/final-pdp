@@ -1,79 +1,24 @@
 [
   {
-    "id": "c46f9ed5-1b32-4b92-93b3-ae193e82b7f2",
-    "title": "Estudiar Física II",
-    "description": "final",
-    "status": "to do",
+    "id": "0bde7267-19ae-4e20-94b8-29fd2f07dad9",
+    "title": "Estudiar",
+    "description": "final física II",
+    "status": "done",
     "difficulty": "hard",
-    "createdAt": "2026-08-04T14:48:37.214Z",
-    "updatedAt": "2026-08-05T21:24:36.314Z",
-    "expirationDate": "2026-08-17T02:59:59.000Z",
+    "createdAt": "2026-08-06T14:30:34.105Z",
+    "updatedAt": "2026-08-06T15:17:08.369Z",
+    "expirationDate": "2026-08-11T02:59:59.000Z",
     "deleted": false
   },
   {
-    "id": "41e981d1-4af8-4b09-8746-e31bcd407948",
-    "title": "Cocinar pollo",
-    "description": "almuerzo",
-    "status": "to do",
-    "difficulty": "medium",
-    "createdAt": "2026-08-04T14:48:47.435Z",
-    "updatedAt": "2026-08-04T14:57:58.160Z",
-    "expirationDate": "2026-08-07T02:59:59.000Z",
-    "deleted": false
-  },
-  {
-    "id": "33372b88-8794-4f07-9d26-2d3e18fffbf7",
-    "title": "Leer",
-    "description": null,
-    "status": "pending",
-    "difficulty": "easy",
-    "createdAt": "2026-08-04T15:16:12.005Z",
-    "updatedAt": "2026-08-04T15:16:12.005Z",
-    "expirationDate": "2026-08-05T02:59:59.000Z",
-    "deleted": false
-  },
-  {
-    "id": "86cb46d0-cd8c-4bb9-9833-e16e276ed660",
+    "id": "76a6e2ae-84dc-44f5-9b1f-349a10afb5e5",
     "title": "Cocinar",
     "description": null,
-    "status": "pending",
-    "difficulty": "easy",
-    "createdAt": "2026-08-05T15:02:45.014Z",
-    "updatedAt": "2026-08-05T15:02:45.014Z",
-    "expirationDate": "2026-08-06T02:59:59.000Z",
-    "deleted": false
-  },
-  {
-    "id": "42e0d1ed-78db-4488-b74c-fdf5b20167e5",
-    "title": "Estudiar",
-    "description": "álgebra",
     "status": "to do",
-    "difficulty": "hard",
-    "createdAt": "2026-08-05T15:03:06.502Z",
-    "updatedAt": "2026-08-05T15:03:06.502Z",
-    "expirationDate": "2026-08-10T02:59:59.000Z",
-    "deleted": false
-  },
-  {
-    "id": "c644d673-f98c-48ca-a123-1c40483a9693",
-    "title": "Ir al super",
-    "description": "martes o jueves",
-    "status": "pending",
     "difficulty": "easy",
-    "createdAt": "2026-08-05T15:03:35.035Z",
-    "updatedAt": "2026-08-05T15:03:46.122Z",
-    "expirationDate": "2026-08-12T02:59:59.000Z",
-    "deleted": false
-  },
-  {
-    "id": "24442443-66b8-46ac-b1e4-d70e6a4bcc7e",
-    "title": "Rendir",
-    "description": null,
-    "status": "pending",
-    "difficulty": "easy",
-    "createdAt": "2026-08-05T21:26:51.675Z",
-    "updatedAt": "2026-08-05T21:26:51.675Z",
-    "expirationDate": "2026-08-06T02:59:59.000Z",
+    "createdAt": "2026-08-06T15:26:48.290Z",
+    "updatedAt": "2026-08-06T15:26:48.290Z",
+    "expirationDate": "2026-08-07T02:59:59.000Z",
     "deleted": false
   }
 ]

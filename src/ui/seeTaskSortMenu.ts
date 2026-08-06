@@ -23,7 +23,7 @@ export async function seeTasksSortMenuUI(): Promise<SeeTaskSortOptionMenu> {
     });
 
   if (isCancel(value)) {
-    cancel("Canceldo");
+    cancel("Cancelado");
     return "cancel";
   }
 

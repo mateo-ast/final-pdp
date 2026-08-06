@@ -18,7 +18,6 @@ function percentage(n: number, total: number): string {
   return n.toString().padEnd(PADDING) + percent.toFixed(0) + "%";
 }
 
-// PURA
 function printInfo(fields: [string, string][], PADDING: number) {
   fields
     .map(([key, value]) => `${key.padEnd(PADDING)} ${value}`)
@@ -50,7 +49,7 @@ export async function statsUI({
   ];
   const PADDING = 24;
 
-  const time = 100 * randomInt(1, total);
+  const time = 100 * randomInt(1, total + deletedTasks + 1);
   await analizing(time);
 
   printInfo(fields, PADDING);

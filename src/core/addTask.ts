@@ -10,8 +10,8 @@ export async function addTask(state: AppState): Promise<AppState> {
   if (!newTask) return state;
 
   return {
-    ...state,
     tasks: [...state.tasks, newTask],
+    hasActiveTasks: true,
     hasUnsavedTasks: true,
   };
 }

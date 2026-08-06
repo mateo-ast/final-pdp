@@ -5,7 +5,7 @@ import {
   type SeeTaskSortOptionMenu,
 } from "../ui/seeTaskSortMenu.js";
 import type { AppState } from "../index.js";
-import type { TaskList } from "./task.js";
+import { hasStatus, type TaskList } from "./task.js";
 
 // PURA
 function sortTaskByTitle(tasks: TaskList): TaskList {
@@ -56,21 +56,23 @@ export async function seeTasks({
   const activeTasks: TaskList = tasks.filter((task) => !task.deleted);
 
   const seeTaskOptionMenu = await seeTasksMenuUI(
-    activeTasks.some((task) => task.status === "pending"),
-    activeTasks.some((task) => task.status === "to do"),
-    activeTasks.some((task) => task.status === "done"),
-    activeTasks.some((task) => task.status === "cancelled"),
+    activeTasks.some(hasStatus("pending")),
+    activeTasks.some(hasStatus("to do")),
+    activeTasks.some(hasStatus("done")),
+    activeTasks.some(hasStatus("cancelled")),
   );
 
   if (seeTaskOptionMenu === "back") return;
 
   const seeTaskSortOption = await seeTasksSortMenuUI();
 
+  if (seeTaskSortOption === "cancel") return;
+
   const sortedTasks = sortTasks(activeTasks, seeTaskSortOption);
 
   seeTaskOptionMenu === "all"
     ? printTasks(sortedTasks)
     : printTasks(
-      sortedTasks.filter((task) => task.status === seeTaskOptionMenu),
+      sortedTasks.filter(hasStatus(seeTaskOptionMenu)),
     );
 }

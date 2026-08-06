@@ -1,18 +1,34 @@
+import { statsUI, type Stats } from "../ui/stats.js";
 import type { AppState } from "../index.js";
-import { isUrgent } from "../logic.js";
-import { printTasks } from "../ui/printTasks.js";
-import { statsUI } from "../ui/stats.js";
+import {
+  hasStatus,
+  isActive,
+  isDeleted,
+  type Task,
+  type TaskList,
+} from "./task.js";
+
+// PURA
+export const countTasks = (
+  tasks: TaskList,
+  condition: (task: Task) => boolean,
+): number => tasks.filter(condition).length;
+
+// PURA
+export const calculateStats = (tasks: TaskList): Stats => {
+  const activeTasks = tasks.filter(isActive);
+
+  return {
+    total: activeTasks.length,
+    pendingTasks: countTasks(activeTasks, hasStatus("pending")),
+    toDoTasks: countTasks(activeTasks, hasStatus("to do")),
+    doneTasks: countTasks(activeTasks, hasStatus("done")),
+    cancelledTasks: countTasks(activeTasks, hasStatus("cancelled")),
+    deletedTasks: countTasks(tasks, isDeleted),
+  };
+};
 
 export async function stats({ tasks }: AppState): Promise<void> {
-  await statsUI({
-    total: tasks.filter(task => !task.deleted).length,
-    pendingTasks: tasks.filter(task => !task.deleted && task.status === "pending").length,
-    toDoTasks: tasks.filter(task => !task.deleted && task.status === "to do").length,
-    doneTasks: tasks.filter(task => !task.deleted && task.status === "done").length,
-    cancelledTasks: tasks.filter(task => !task.deleted && task.status === "cancelled").length,
-    deletedTasks: tasks.filter(task => task.deleted).length
-  });
-
-  printTasks(tasks.filter(isUrgent), "Urgentes");
-  printTasks(tasks.filter(task => !isUrgent(task)), "No urgentes");
+  const statsData = calculateStats(tasks);
+  await statsUI(statsData);
 }
