@@ -8,7 +8,7 @@ export async function saveTasks(state: AppState): Promise<AppState> {
     message: "¿Desea guardar las tareas?",
     initialValue: true,
     finalMessageTrue: "Se guardaron las tareas",
-    finalMessageFalse: "No se guardaron las tareas"
+    finalMessageFalse: "No se guardaron las tareas",
   });
 
   if (!isConfirmed) return state;
@@ -18,6 +18,6 @@ export async function saveTasks(state: AppState): Promise<AppState> {
   return {
     ...state,
     hasUnsavedTasks: false,
-    hasActiveTasks: state.tasks.some(isActive)
+    hasActiveTasks: state.tasks.some(isActive),
   };
 }

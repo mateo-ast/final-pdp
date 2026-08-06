@@ -1,10 +1,4 @@
-import {
-  cancel,
-  date,
-  group,
-  select,
-  text,
-} from "@clack/prompts";
+import { cancel, date, group, select, text } from "@clack/prompts";
 import { validateDescription, validateTitle } from "./utils.js";
 import {
   updateTask,

@@ -19,8 +19,8 @@ export async function removeTask(state: AppState): Promise<AppState> {
     message: "¿Seguro que desea eliminar la tarea?",
     initialValue: false,
     finalMessageTrue: "Tarea correctamente eliminada",
-    finalMessageFalse: "No se eliminó la tarea"
-  })
+    finalMessageFalse: "No se eliminó la tarea",
+  });
 
   if (!confirmRemove) return state;
 

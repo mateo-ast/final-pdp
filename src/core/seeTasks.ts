@@ -72,7 +72,5 @@ export async function seeTasks({
 
   seeTaskOptionMenu === "all"
     ? printTasks(sortedTasks)
-    : printTasks(
-      sortedTasks.filter(hasStatus(seeTaskOptionMenu)),
-    );
+    : printTasks(sortedTasks.filter(hasStatus(seeTaskOptionMenu)));
 }

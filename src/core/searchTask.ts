@@ -11,14 +11,13 @@ export async function searchTask(state: AppState): Promise<AppState> {
 
   const confirmEdit: boolean = await confirmUI({
     message: "¿Desea editar la tarea",
-    initialValue: false
-  })
+    initialValue: false,
+  });
 
   if (!confirmEdit) {
     printTask(selectedTask);
     return state;
   }
-
 
   const editedTask: Task | null = await editTaskUI(
     selectedTask,

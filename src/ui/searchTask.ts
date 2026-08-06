@@ -1,9 +1,4 @@
-import {
-  autocomplete,
-  cancel,
-  isCancel,
-  type Option,
-} from "@clack/prompts";
+import { autocomplete, cancel, isCancel, type Option } from "@clack/prompts";
 import type { Task, TaskList } from "../core/task.js";
 
 export type TaskOption = Option<Task>;
